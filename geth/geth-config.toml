@@ -74,8 +74,7 @@ WriteTimeout = 30000000000
 IdleTimeout = 120000000000
 
 [Metrics]
-HTTP = "127.0.0.1"
-Port = 6060
+HTTP = "0.0.0.0"
 InfluxDBEndpoint = "http://127.0.0.1:8080"
 InfluxDBDatabase = "geth"
 InfluxDBUsername = "geth"

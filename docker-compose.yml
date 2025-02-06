@@ -43,6 +43,8 @@ services:
       - --authrpc.jwtsecret=/root/.ethereum/jwt.hex
       - --authrpc.port=8551
       - --cache=4096   # should be 34% of RAM
+      - --metrics
+      - --metrics.addr=0.0.0.0
     mem_limit: 10g
 
   prysm:
@@ -235,63 +237,73 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:19092
       DYNAMIC_CONFIG_ENABLED: 'true'
 
-#   prometheus:
-#     image: prom/prometheus:latest
-#     container_name: prometheus
-#     command:
-#       - '--config.file=/etc/prometheus/prometheus.yml'
-#       - '--storage.tsdb.path=/prometheus'
-#       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-#       - '--web.console.templates=/usr/share/prometheus/consoles'
-#     ports:
-#       - 9090:9090
-#     restart: unless-stopped
-#     volumes:
-#       - ./prometheus:/etc/prometheus
-#       - prom_data:/prometheus
-#   cadvisor:
-#     image: gcr.io/cadvisor/cadvisor:latest
-#     container_name: cadvisor
-#     ports:
-#       - 8082:8080
-#     volumes:
-#       - /:/rootfs:ro
-#       - /var/run:/var/run:rw
-#       - /sys:/sys:ro
-#       - /var/lib/docker/:/var/lib/docker:ro
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+    restart: unless-stopped
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prom_data:/prometheus
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - 8083:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
   
-#   node-exporter:
-#     image: prom/node-exporter:latest
-#     container_name: node-exporter
-#     ports:
-#       - 9200:9100
-#     volumes:
-#       - /proc:/host/proc:ro
-#       - /sys:/host/sys:ro
-#       - /:/rootfs:ro
-#     command:
-#       - '--path.procfs=/host/proc'
-#       - '--path.sysfs=/host/sys'
-#       - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    ports:
+      - 9200:9100
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
 
-#   grafana:
-#     image: grafana/grafana:latest
-#     container_name: grafana
-#     ports:
-#       - 3001:3000
-#     volumes:
-#       - grafana_data:/var/lib/grafana
-#     environment:
-#       - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - 3001:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - ./grafana/datasources/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
 
-# volumes:
-#   prom_data: {}
-#   grafana_data: {}
+volumes:
+  prom_data: {}
+  grafana_data: {}
 
 
 networks:
   default:
+    name: ether
+    attachable: true
     ipam:
       driver: default
       config:
         - subnet: 99.97.0.0/16
+          ip_range: 99.97.5.0/24
+          gateway: 99.97.0.1
