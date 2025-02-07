@@ -22,3 +22,8 @@ scrape_configs:
     static_configs:
       - targets: ["geth:6060"]
     metrics_path: "/debug/metrics/prometheus"
+  - job_name: "prysm"
+    scrape_interval: "15s"
+    static_configs:
+      - targets: ["prysm:8080"]
+    metrics_path: "/metrics"
