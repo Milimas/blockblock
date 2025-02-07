@@ -14,9 +14,9 @@ graph TD;
     I[Connector2] -->|Produces data to| C[Kafka1];
     I[Connector2] -->|Requests data from| A[geth];
     K[Kafka-UI] -->|Manages| C[Kafka1];
-    L[Prometheus] -->|Scrapes metrics from| A[geth:6060];
-    L[Prometheus] -->|Scrapes metrics from| M[cAdvisor:8080];
-    L[Prometheus] -->|Scrapes metrics from| N[Node Exporter:9100];
+    L[Prometheus] -->|Scrapes metrics from| A[geth];
+    L[Prometheus] -->|Scrapes metrics from| M[cAdvisor];
+    L[Prometheus] -->|Scrapes metrics from| N[Node Exporter];
     N[Node Exporter] -->|Provides metrics to| L[Prometheus];
     O[Grafana] -->|Uses Prometheus as datasource| L[Prometheus];
 
