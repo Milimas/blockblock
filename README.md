@@ -33,7 +33,6 @@ graph TD;
     subgraph Database Layer
       F
       G
-      J
     end
 
     subgraph Connector Layer
@@ -50,5 +49,6 @@ graph TD;
     subgraph Management Layer
       K
       O
+      J
     end
 ```
