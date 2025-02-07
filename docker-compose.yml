@@ -105,7 +105,6 @@ services:
     depends_on:
       - zookeeper
 
-  # zookeeper
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.2
     hostname: zookeeper
@@ -151,7 +150,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  
+
   timescaledb2:
     image: timescale/timescaledb:2.4.1-pg13
     container_name: timescaledb2
@@ -184,17 +183,10 @@ services:
       DATA_SOURCE: postgres
       DATA_SOURCE_POSTGRES_CONNECTION_STRING: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@timescaledb:5432/${POSTGRES_DB}
       DATA_SOURCE_PERSIST_RAW_TRANSACTION_LOGS: false
-      # DESTINATION: kafka
-      # DESTINATION_KAFKA_BOOTSTRAP_SERVERS: kafka1:19092 #,kafka2:9093,kafka3:9094
-      # DESTINATION_KAFKA_BLOCKS_TOPIC_NAME: blocks
-      # DESTINATION_KAFKA_TRANSACTIONS_TOPIC_NAME: transactions
-      # DESTINATION_KAFKA_TRANSACTION_LOGS_TOPIC_NAME: transaction_logs
-      # DESTINATION_KAFKA_RAW_TRANSACTION_LOGS_TOPIC_NAME: raw_transaction_logs
-      # DESTINATION_KAFKA_SEND_TRANSACTION_LOGS_TO_ALIAS_TOPICS: true
       DESTINATION: postgres
       DESTINATION_POSTGRES_CONNECTION_STRING: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@timescaledb2:5433/${POSTGRES_DB_DESTINATION}
       DESTINATION_POSTGRES_PERSIST_RAW_TRANSACTION_LOGS: true
-  
+
   connector2:
     image: aliarbak/ethereum-connector
     restart: unless-stopped
@@ -215,7 +207,6 @@ services:
       DESTINATION_KAFKA_RAW_TRANSACTION_LOGS_TOPIC_NAME: raw_transaction_logs
       DESTINATION_KAFKA_SEND_TRANSACTION_LOGS_TO_ALIAS_TOPICS: true
 
-  # Adminer
   adminer:
     image: adminer
     container_name: adminer
@@ -253,6 +244,8 @@ services:
       - prom_data:/prometheus
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    depends_on:
+      - geth
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
@@ -264,7 +257,7 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
-  
+
   node-exporter:
     image: prom/node-exporter:latest
     container_name: node-exporter
@@ -295,7 +288,6 @@ services:
 volumes:
   prom_data: {}
   grafana_data: {}
-
 
 networks:
   default:
