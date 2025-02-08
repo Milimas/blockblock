@@ -4,6 +4,7 @@ import React from 'react';
 import { Copy, ClipboardCheck } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 
 interface CopyTextProps {
   children: React.ReactNode;
@@ -18,10 +19,10 @@ const CopyText: React.FC<CopyTextProps> = ({ children, value, href }: CopyTextPr
     try {
       await navigator.clipboard.writeText(value);
       setCopied(true);
-        setTimeout(() => {
-          setCopied(false);
-          setButtonVisible(false);
-        }, 2000);
+      setTimeout(() => {
+        setCopied(false);
+        setButtonVisible(false);
+      }, 2000);
     } catch (err) {
       console.error('Failed to copy text: ', err);
     }
@@ -31,18 +32,29 @@ const CopyText: React.FC<CopyTextProps> = ({ children, value, href }: CopyTextPr
     setButtonVisible(true);
   }
 
-    const onMouseLeave = () => {
-      if (!copied)
-        setButtonVisible(false);
-    }
+  const onMouseLeave = () => {
+    if (!copied)
+      setButtonVisible(false);
+  }
 
   return (
     <div className="flex space-x-2"
-        onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      {href ? <Link href={href}>{ children }</Link> : <span>{ children }</span>}
-      <button onClick={copyToClipboard} className={`${buttonVisible ? 'visible' : 'invisible'}`}>
-        {copied ? <ClipboardCheck size={16} strokeWidth={1.25} /> : <Copy size={16} strokeWidth={1.25} />}
-      </button>
+      onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      {href ? <Link href={href}>{children}</Link> : <span>{children}</span>}
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button onClick={copyToClipboard} className={`${buttonVisible ? 'visible' : 'invisible'}`}>
+              {copied ?
+                <ClipboardCheck size={16} strokeWidth={1.25} />
+                : <Copy size={16} strokeWidth={1.25} />}
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Copy to clipboard</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   );
 };

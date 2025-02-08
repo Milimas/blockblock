@@ -3,17 +3,12 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Transaction } from "@/utils/api"
 import ShortHash, { shortHash } from "@/components/shortHash";
-import { Skeleton } from "@/components/ui/skeleton";
 
 export const columns: ColumnDef<Transaction>[] = [
   {
     header: "Hash",
     accessorKey: "hash",
-    cell: ({ row }) => <ShortHash hash={row.getValue('hash')} />,
-  },
-  {
-    header: "Index",
-    accessorKey: "index",
+    cell: ({ row }) => <ShortHash size={14} hash={row.getValue('hash')} />,
   },
   {
     header: "Chain ID",
@@ -27,18 +22,13 @@ export const columns: ColumnDef<Transaction>[] = [
     </div>,
   },
   {
-    header: "Contract Address",
-    accessorKey: "contract_address",
-    cell: ({ row }) => <ShortHash hash={row.getValue('contract_address')} />,
-  },
-  {
     header: "To",
     accessorKey: "to",
-    cell: ({ row }) => <ShortHash href={`/transactions/wallet/${row.getValue('to')}`} hash={row.getValue('to')} />,
+    cell: ({ row }) => <ShortHash size={14} href={`/transactions/wallet/${row.getValue('to')}`} hash={row.getValue('to')} />,
   },
   {
     header: "Block Hash",
     accessorKey: "block_hash",
-    cell: ({ row }) => <ShortHash href={`/blocks/${row.getValue('block_hash')}`} hash={row.getValue('block_hash')} />,
+    cell: ({ row }) => <ShortHash size={14} href={`/blocks/${row.getValue('block_hash')}`} hash={row.getValue('block_hash')} />,
   },
 ]

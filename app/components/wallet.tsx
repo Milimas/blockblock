@@ -1,7 +1,7 @@
 "use client";
 
 import { fetchWallet, Transaction } from "@/utils/api"
-import { DataTable } from "@/app/transactions/data-table"
+import { DataTable } from "@/components/data-table"
 import { columns } from "@/app/transactions/columns"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from 'react';

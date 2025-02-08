@@ -3,7 +3,7 @@
 import { Block, fetchBlocks } from "@/utils/api";
 import { columns } from "./columns"
 import { useEffect, useState } from 'react';
-import { DataTable } from "./data-table"
+import { DataTable } from "@/components/data-table"
 import { Button } from "@/components/ui/button"
 
 export default function BlockPage() {
@@ -31,12 +31,12 @@ export default function BlockPage() {
     }
     loadBlocks();
   }, [page]);
-  console.log("Blocks", blocks);
+
   return (
     <>
-      {blocks.length > 0 ? (
+      {loading || blocks.length > 0 ? (
         <div className="">
-          <DataTable columns={columns} data={blocks} />
+          <DataTable loading={loading} columns={columns} data={blocks} />
           <div className="flex justify-between mt-4">
             <Button onClick={() => setPage(page => Math.max(page - 1, 1))} disabled={page === 1}>
               Previous

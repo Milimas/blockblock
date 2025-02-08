@@ -15,20 +15,42 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Skeleton } from "./ui/skeleton"
+import React from 'react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  loading: boolean
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) { 
+  loading,
+}: DataTableProps<TData, TValue>) {
+  const tableData = React.useMemo(
+    () => (loading ? Array(20).fill({}) : data),
+    [loading, data]
+  ); 
+  const tableColumns = React.useMemo(
+    () =>
+      loading
+        ? columns.map((column) => ({
+            ...column,
+            cell: <Skeleton className="w-full h-5" />,
+          }))
+        : columns,
+    [loading, columns]
+  );
+  console.log(tableColumns);
+
+  
   const table = useReactTable({
-    data,
-    columns,
+    data: tableData,
+    columns: tableColumns,
     getCoreRowModel: getCoreRowModel(),
+    loading: loading,
   })
 
   return (

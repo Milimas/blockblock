@@ -14,7 +14,7 @@ export const columns: ColumnDef<Block>[] = [
     header: "Hash",
     cell: ({ row }) => {
       const hash = row.getValue('hash');
-      return <ShortHash hash={hash} href={`/blocks/${hash}`} />
+      return <ShortHash hash={hash} href={`/blocks/${hash}`}/>
     }
   },
   {
@@ -34,21 +34,4 @@ export const columns: ColumnDef<Block>[] = [
     accessorKey: "transaction_count",
     header: "Transaction Count",
   },
-  {
-    header: "View Transactions",
-    cell: ({ row }) => {
-      const hash = row.getValue('hash');
-      const count = row.getValue('transaction_count');
-      if (count < 1) {
-        return <Button variant="primary" disabled className="flex items-center bg-muted/50 h-4 rounded-md">
-          <ChevronRight />
-        </Button>
-      }
-      return <Link href={`/blocks/${hash}/transactions`} >
-        <Button variant="primary" className="flex items-center bg-muted/50 h-4 rounded-md">
-          <ChevronRight />
-        </Button>
-      </Link>
-    }
-  }
 ]
