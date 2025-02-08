@@ -4,6 +4,7 @@ export interface Block {
     number: number;
     time: number;
     created_at: number;
+    transaction_count: number;
   }
 
   export interface Transaction {
@@ -23,7 +24,7 @@ export interface Block {
   }
   
   export async function fetchBlocks(page: number = 1): Promise<PaginatedResponse<Block>> {
-    const response = await fetch(`http://localhost:8000/api/blocks/?page=${page}`);
+    const response = await fetch(`http://localhost:8000/api/blocks/?ordering=-created_at&page=${page}`);
     if (!response.ok) {
       throw new Error(`An error occurred: ${response.statusText}`);
     }
@@ -48,6 +49,14 @@ export interface Block {
 
   export async function fetchTransactions(page: number = 1): Promise<PaginatedResponse<Transaction>> {
     const response = await fetch(`http://localhost:8000/api/transactions/?page=${page}`);
+    if (!response.ok) {
+      throw new Error(`An error occurred: ${response.statusText}`);
+    }
+    return await response.json();
+  }
+
+  export async function fetchWallet(wallet_address: string, page: number = 1): Promise<PaginatedResponse<Transaction>> {
+    const response = await fetch(`http://localhost:8000/api/wallets/${wallet_address}/?page=${page}`);
     if (!response.ok) {
       throw new Error(`An error occurred: ${response.statusText}`);
     }

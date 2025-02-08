@@ -27,12 +27,7 @@ export function NavBar() {
                             <Link href="/blocks" className="text-lg font-semibold">Blocks</Link>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                            <NavigationMenuTrigger className="text-lg font-semibold">Item One</NavigationMenuTrigger>
-                            <NavigationMenuContent>
-                                <NavigationMenuLink className="block px-4 py-2">Link</NavigationMenuLink>
-                                <NavigationMenuLink className="block px-4 py-2">Link</NavigationMenuLink>
-                                <NavigationMenuLink className="block px-4 py-2">Link</NavigationMenuLink>
-                            </NavigationMenuContent>
+                            <Link href="/transactions" className="text-lg font-semibold">Transactions</Link>
                         </NavigationMenuItem>
                     </div>
                 </NavigationMenuList>

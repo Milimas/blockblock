@@ -1,16 +1,17 @@
-import CopyText, { CopyButton } from "@/components/copy-button"
+import CopyText from "@/components/copy-button"
 import { Block } from "@/utils/api"
-import { shortHash } from "@/utils/shortHash"
- 
+import ShortHash, { shortHash } from "@/components/shortHash"
+import Link from 'next/link'
+
 export async function generateStaticParams() {
   const blocks: Block[] = await fetch('http://localhost:8000/api/blocks').then((res) => res.json())
-  .catch((e) => [])
-  
+    .catch((e) => [])
+
   return blocks.map((block) => ({
     hash: String(block.hash),
   }))
 }
- 
+
 export default async function Page({
   params,
 }: {
@@ -18,18 +19,18 @@ export default async function Page({
 }) {
   const hash = (await params).block_hash
   console.log("Hash", hash);
-  
+
   const block: Block = await fetch(`http://backend:8000/api/blocks/${hash}/`).then(
     (res) => res.json()
   ).catch((e) => [])
 
   return (
-    <main>
-      { block ? (
+    <>
+      {block.hash ? (
         <div className="p-8 flex space-y-4 flex-col">
           <h1>Block</h1>
           <div>
-            <CopyText value={block.hash} >{shortHash(block.hash)}</CopyText>
+            <ShortHash hash={block.hash} />
           </div>
           <div>
             <span>Number: </span>
@@ -43,13 +44,14 @@ export default async function Page({
             <span>Time: </span>
             <span>{new Date(block.time * 1000).toLocaleString()}</span>
           </div>
+          <Link href={`/blocks/${block.hash}/transactions`}>View Transactions</Link>
         </div>
       ) : (
-        <div>
-          <h1>Error</h1>
-          <p>Block not found</p>
+        <div className="text-center">
+          <h1 className="text-2xl font-bold">block found</h1>
+          <p className="text-gray-500">There is no block <ShortHash value={hash}/> to display</p>
         </div>
       )}
-    </main>
+    </>
   )
 }

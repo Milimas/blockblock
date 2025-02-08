@@ -2,17 +2,19 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { Block } from "@/utils/api"
-import { shortHash } from "@/utils/shortHash";
+import ShortHash, { shortHash } from "@/components/shortHash";
 import Link from 'next/link';
+import CopyText from "@/components/copy-button";
+import { Button } from "@/components/ui/button";
+import { ChevronRight } from "lucide-react"
 
 export const columns: ColumnDef<Block>[] = [
   {
     accessorKey: "hash",
     header: "Hash",
     cell: ({ row }) => {
-        const longHash = row.getValue('hash') ;
-        const _shortHash = shortHash(longHash) ;
-        return <Link href={`/blocks/${longHash}`} >{_shortHash}</Link> ;
+      const hash = row.getValue('hash');
+      return <ShortHash hash={hash} href={`/blocks/${hash}`}/>
     }
   },
   {
@@ -28,4 +30,25 @@ export const columns: ColumnDef<Block>[] = [
     header: "Time",
     cell: ({ row }) => <>{new Date(row.getValue('time') * 1000).toLocaleString()}</>,
   },
+  {
+    accessorKey: "transaction_count",
+    header: "Transaction Count",
+  },
+  {
+    header: "View Transactions",
+    cell: ({ row }) => {
+      const hash = row.getValue('hash');
+      const count = row.getValue('transaction_count');
+      if (count < 1) {
+        return <Button variant="primary" disabled className="flex items-center bg-muted/50 p-2 rounded-md">
+          <ChevronRight />
+        </Button>
+      }
+      return <Link href={`/blocks/${hash}/transactions`} >
+        <Button variant="primary" className="flex items-center bg-muted/50 p-2 rounded-md">
+      <ChevronRight />
+    </Button>
+    </Link>
+    }
+  }
 ]

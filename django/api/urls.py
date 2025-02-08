@@ -12,4 +12,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('blocks/<str:block_hash>/', views.BlockDetailView.as_view(), name='block-detail'),
     path('blocks/<str:block_hash>/transactions/', views.TransactionsByBlockView.as_view(), name='block-transactions'),
+    path('wallets/<str:wallet_address>/', views.WalletTransactionsView.as_view(), name='wallet-transactions'),
 ]

@@ -31,9 +31,9 @@ export default function TransactionPage() {
   }, [hash]);
 
   return (
-    <main className="container mx-auto items-center justify-center flex min-h-screen">
+    <>
       {transactions.length > 0 ? (
-        <div className="container mx-auto">
+        <div className="">
           <DataTable columns={columns} data={transactions} />
           <div className="flex justify-between mt-4">
             <Button onClick={() => setHash(hash => Math.max(hash - 1, 1))} disabled={hash === 1}>
@@ -48,6 +48,6 @@ export default function TransactionPage() {
           <p className="text-gray-500">There are no transactions to display</p>
         </div>)
       }
-    </main>
+    </>
   )
 }

@@ -7,10 +7,14 @@ class BlockSerializer(serializers.ModelSerializer):
     number = DecimalField()
     time = DecimalField()
     created_at = DecimalField()
+    transaction_count = serializers.SerializerMethodField('get_transaction_count')
 
     class Meta:
         model = Block
         fields = '__all__'
+    
+    def get_transaction_count(self, obj):
+        return Transaction.objects.filter(block_hash=obj.hash).count()
 
 class RawTransactionLogSerializer(serializers.ModelSerializer):
     index = DecimalField()
