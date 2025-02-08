@@ -5,7 +5,7 @@
  */
 export function shortHash(hash: string): string {
     if (hash.length < 12) {
-      throw new Error('Hash is too short to be shortened');
+      return hash;
     }
     const firstPart = hash.slice(0, 6);
     const lastPart = hash.slice(-6);

@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Block } from "@/utils/api"
 import { shortHash } from "@/utils/shortHash";
+import Link from 'next/link';
 
 export const columns: ColumnDef<Block>[] = [
   {
@@ -11,7 +12,7 @@ export const columns: ColumnDef<Block>[] = [
     cell: ({ row }) => {
         const longHash = row.getValue('hash') ;
         const _shortHash = shortHash(longHash) ;
-        return (_shortHash) ;
+        return <Link href={`/blocks/${longHash}`} >{_shortHash}</Link> ;
     }
   },
   {
