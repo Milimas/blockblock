@@ -81,9 +81,6 @@ export default async function Home() {
   const gasPrice = await getGasPrice();
   const syncing = await getSyncing();
 
-  console.log("Syncing", syncing);
-
-
   return (
     <div className="block text-center">
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">

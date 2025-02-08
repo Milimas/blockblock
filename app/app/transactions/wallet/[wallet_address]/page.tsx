@@ -8,7 +8,6 @@ export default async function Page({
     params: Promise<{ wallet_address: string }>
   }) {
     const wallet_address = (await params).wallet_address
-    console.log("Wallet Address", wallet_address);
     
     return (
       <>

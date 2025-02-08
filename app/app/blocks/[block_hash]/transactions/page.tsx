@@ -22,13 +22,11 @@ export default async function Page({
   params: Promise<{ hash: string }>
 }) {
   const hash = (await params).block_hash
-  console.log("Hash", hash);
   
   const transactions: Transaction = await fetch(`http://backend:8000/api/blocks/${hash}/transactions/`).then(
     (res) => res.json()
   ).then((data) => data.results)
   .catch((e) => [])
-  console.log("Transactions", transactions);
   
   return (
     <>

@@ -28,7 +28,7 @@ export const columns: ColumnDef<Block>[] = [
   {
     accessorKey: "time",
     header: "Time",
-    cell: ({ row }) => <>{new Date(row.getValue('time') * 1000).toLocaleString()}</>,
+    cell: ({ row }) => <>{new Date(row.getValue('time') * 1000).toUTCString()}</>,
   },
   {
     accessorKey: "transaction_count",

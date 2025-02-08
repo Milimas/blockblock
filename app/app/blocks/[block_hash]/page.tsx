@@ -18,7 +18,6 @@ export async function generateStaticParams() {
     params: Promise<{ hash: string }>
   }) {
   const hash = (await params).block_hash
-  console.log("Hash", hash);
 
   const block: Block = await fetch(`http://backend:8000/api/blocks/${hash}/`).then(
     (res) => res.json()
