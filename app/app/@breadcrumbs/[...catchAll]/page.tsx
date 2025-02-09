@@ -7,6 +7,6 @@ type Props = {
   }
   export default async function BreadcrumbsSlot({params}: Props) {
     const catchAll = (await params).catchAll
-    console.log("rendering in @breadcrumbs", catchAll)
+    // console.log("rendering in @breadcrumbs", catchAll)
     return <Breadcrumbs routes={catchAll} />
   }

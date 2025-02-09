@@ -1,4 +1,3 @@
-import ShortHash from "@/components/shortHash";
 import { Block } from "@/utils/api";
 import React from "react";
 import TransactionsCard from "@/components/transaction/transactions-card";
@@ -80,7 +79,7 @@ export default async function Home() {
                   Gas Price: {formatWeiToEth(gasPrice)} ETH
                 </div>
                 <div className="inline-block">
-                  Total Transactions: {totalTransactions.count}
+                  Total Transactions: {totalTransactions?.count}
                 </div>
               </div>
             </CardContent>

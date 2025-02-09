@@ -10,18 +10,17 @@ export default function LastBlock() {
     const [chainID, setChainID] = useState<string | null>(null);
 
     useEffect(() => {
-        
         socket.on('connect', onConnect);
         socket.on('blocks', onLastBlock);
 
         async function onConnect() {
-            console.log('connected');
+            // console.log('connected');
         }
 
         function onLastBlock(msg: string) {
             const data = JSON.parse(msg);
             setLastBlock(data);
-            console.log(data);
+            // console.log(data);
         }
 
         return () => {
@@ -39,7 +38,7 @@ export default function LastBlock() {
             <CardContent>
                 <div className="flex flex-col items-center justify-center">
                     <div className="inline-block">
-                        Block Number: {lastBlock?.blockNumber}
+                        Block Number: {lastBlock?.number}
                     </div>
                     <div className="flex space-between">
                         {`Hash: `}<ShortHash size={10} href="/blocks/last" hash={lastBlock?.hash} />

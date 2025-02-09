@@ -40,12 +40,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <Link href="/">
+        <a href="/">
           <div className="flex items-center justify-center h-12 bg-muted/50 text-xl font-bold rounded-md">
             <Boxes size={40} strokeWidth={1.25} />
             <span className="ml-2 text-lg font-bold">BlockBlock</span>
           </div>
-        </Link>
+        </a>
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}

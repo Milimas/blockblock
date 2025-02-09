@@ -8,7 +8,7 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     header: "Hash",
     accessorKey: "hash",
-    cell: ({ row }) => <ShortHash hash={row.getValue('hash')} />,
+    cell: ({ row }) => <ShortHash href={`/transactions/${row.getValue('hash')}`} hash={row.getValue('hash')} />,
   },
   {
     header: "Index",

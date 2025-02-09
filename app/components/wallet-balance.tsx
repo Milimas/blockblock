@@ -9,7 +9,7 @@ interface WalletBalanceProps {
 
 export const formatWeiToEth = async (weiAmount) => {
     // Convert wei string to BigInt to handle large numbers
-    const wei = BigInt(weiAmount);
+    const wei = BigInt(weiAmount || 0);
     // ETH has 18 decimal places
     const divisor = BigInt(10 ** 18);
 

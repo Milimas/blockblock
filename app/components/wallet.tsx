@@ -15,7 +15,7 @@ export default function WalletPage() {
     const [error, setError] = useState<string | null>(null);
     const params = useParams();
 
-    console.log("Wallet Address", params.wallet_address);
+    // console.log("Wallet Address", params.wallet_address);
     
 
     useEffect(() => {

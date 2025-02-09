@@ -24,7 +24,7 @@ export default function BlocksCard() {
         function onBlocks(msg: string) {
             const data = JSON.parse(msg);
             setBlocks((prev) => [data, ...prev].slice(0, 10)); // Keep last 10 updates
-            console.log(data);
+            // console.log(data);
             
         }
         
