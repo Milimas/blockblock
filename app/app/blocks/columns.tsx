@@ -13,7 +13,7 @@ export const columns: ColumnDef<Block>[] = [
     header: "Hash",
     cell: ({ row }) => {
       const hash = row.getValue('hash');
-      return <ShortHash hash={hash} href={`/blocks/${hash}`} />
+      return <ShortHash hash={hash} href={`/blocks/${hash}/`} />
     }
   },
   {

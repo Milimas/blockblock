@@ -83,8 +83,6 @@ export default async function Home() {
                 </div>
               </div>
             </CardContent>
-            <CardFooter className="text-sm text-muted-foreground flex items-center justify-center">
-            </CardFooter>
           </Card>
 
         </div>
