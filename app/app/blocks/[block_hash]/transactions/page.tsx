@@ -1,6 +1,5 @@
 import { columns } from "@/app/transactions/columns"
 import { DataTable } from "@/components/data-table"
-import CopyText, { CopyButton } from "@/components/copy-button"
 import { Transaction } from "@/utils/api"
 import ShortHash, { shortHash } from "@/components/shortHash"
  

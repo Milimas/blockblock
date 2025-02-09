@@ -15,6 +15,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Skeleton } from "./ui/skeleton"
+import React from 'react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -24,10 +26,20 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) { 
+}: DataTableProps<TData, TValue>) {
+  
+  const sekeletonTable = useReactTable({
+    data: Array(10).fill({}),
+    columns: columns.map((column) => ({
+      ...column,
+      cell: <Skeleton className="w-full h-5" />,
+    })),
+    getCoreRowModel: getCoreRowModel(),
+  })
+
   const table = useReactTable({
-    data,
-    columns,
+    data: data,
+    columns: columns,
     getCoreRowModel: getCoreRowModel(),
   })
 
@@ -50,11 +62,18 @@ export function DataTable<TData, TValue>({
                 </TableRow>
                 ))
             ) : (
-                <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                    No results.
-                </TableCell>
+              sekeletonTable.getRowModel().rows.map((row) => (
+                <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                >
+                    {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                    ))}
                 </TableRow>
+                ))
             )}
             </TableBody>
         </Table>

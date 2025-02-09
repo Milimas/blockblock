@@ -6,7 +6,6 @@ import { columns } from "./columns"
 import { useEffect, useState } from 'react';
 import { DataTable } from "@/components/data-table"
 import { Button } from "@/components/ui/button"
-import { Skeleton } from '@/components/ui/skeleton';
 
 export default function TransactionPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -16,17 +15,25 @@ export default function TransactionPage() {
 
   useEffect(() => {
     setLoading(true);
-    setInterval(() => {
-    fetchTransactions(hash)
-      .then((data) => {
+    
+    async function loadTransactions() {
+      try {
+        const data = await fetchTransactions(hash);
         setTransactions(data.results);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError(String(error));
+        }
+      } finally {
         setLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setLoading(false);
-      });
-    }, 1000);
+      }
+    }
+
+    loadTransactions();
+
+
   }, [hash]);
 
   return (

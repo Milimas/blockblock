@@ -4,7 +4,6 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Block } from "@/utils/api"
 import ShortHash, { shortHash } from "@/components/shortHash";
 import Link from 'next/link';
-import CopyText from "@/components/copy-button";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react"
 

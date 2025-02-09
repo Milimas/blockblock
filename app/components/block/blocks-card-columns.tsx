@@ -3,10 +3,6 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Block } from "@/utils/api"
 import ShortHash, { shortHash } from "@/components/shortHash";
-import Link from 'next/link';
-import CopyText from "@/components/copy-button";
-import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react"
 
 export const columns: ColumnDef<Block>[] = [
   {
@@ -24,6 +20,7 @@ export const columns: ColumnDef<Block>[] = [
   {
     accessorKey: "chain_id",
     header: "Chain ID",
+    accessorFn: (row) => row.chainId || row.chain_id,
   },
   {
     accessorKey: "time",
@@ -33,5 +30,6 @@ export const columns: ColumnDef<Block>[] = [
   {
     accessorKey: "transaction_count",
     header: "Transaction Count",
+    accessorFn: (row) => row.transaction_count ?? "-",
   },
 ]

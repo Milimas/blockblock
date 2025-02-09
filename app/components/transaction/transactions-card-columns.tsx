@@ -13,6 +13,7 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     header: "Chain ID",
     accessorKey: "chain_id",
+    accessorFn: (row) => row.chain_id || row.chainId,
   },
   {
     header: "Amount",
@@ -30,5 +31,6 @@ export const columns: ColumnDef<Transaction>[] = [
     header: "Block Hash",
     accessorKey: "block_hash",
     cell: ({ row }) => <ShortHash size={14} href={`/blocks/${row.getValue('block_hash')}`} hash={row.getValue('block_hash')} />,
+    accessorFn: (row) => row.block_hash || row.blockHash,
   },
 ]

@@ -2,8 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { Transaction } from "@/utils/api"
-import ShortHash, { shortHash } from "@/components/shortHash";
-import { Skeleton } from "@/components/ui/skeleton";
+import ShortHash from "@/components/shortHash";
 
 export const columns: ColumnDef<Transaction>[] = [
   {
